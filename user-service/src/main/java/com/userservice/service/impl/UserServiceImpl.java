@@ -6,7 +6,6 @@ import com.userservice.entity.User;
 import com.userservice.exception.FailedToCreateUserException;
 import com.userservice.exception.NoSuchUserException;
 import com.userservice.kafka.UserEventProducer;
-import com.userservice.kafka.impl.UserEventProducerImpl;
 import com.userservice.repository.UserRepository;
 import com.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +28,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public Optional<User> createUser(UserData userData) throws FailedToCreateUserException {
+    public User createUser(UserData userData) throws FailedToCreateUserException {
         User newUser;
         try {
             newUser = userRepository.save(new User(userData));
+
+            UserEvent event = UserEvent.builder()
+                    .id(newUser.getId())
+                    .fullName(newUser.getFullName())
+                    .email(newUser.getEmail())
+                    .build();
+            userEventProducer.sendUserRegisteredEvent(event);
+
         } catch (Exception e) {
             throw new FailedToCreateUserException("Unable to create new User");
         }
 
-        UserEvent event = UserEvent.builder()
-                .id(newUser.getId())
-                .fullName(newUser.getFullName())
-                .email(newUser.getEmail())
-                .build();
-        userEventProducer.sendUserRegisteredEvent(event);
-
-        return Optional.of(newUser);
+        return newUser;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         try {
             user = userRepository.findByUserName(username).orElseThrow();
         } catch (Exception e) {
-            throw new NoSuchUserException("No user found with specified email");
+            throw new NoSuchUserException("No user found with specified username");
         }
         return user;
     }

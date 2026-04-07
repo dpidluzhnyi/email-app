@@ -18,7 +18,7 @@ public class DataLoader implements CommandLineRunner {
         userRepository.save(
                 new User("alice_black", "Alice Black","alice@example.com",  "55555555555"));
         userRepository.save(
-                new User("bobbrown", "bob@example.com", "Bob Brown", "44444444444"));
+                new User("bobbrown",  "Bob Brown", "bob@example.com", "44444444444"));
 
     }
 }

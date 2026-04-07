@@ -53,11 +53,10 @@ class UserServiceImplTest {
     void createUserAndSaveSuccessfully() throws FailedToCreateUserException {
         when(userRepository.save(any(User.class))).thenReturn(savedUser);
 
-        Optional<User> result = userService.createUser(validUserData);
+        User result = userService.createUser(validUserData);
 
-        assertThat(result).isPresent();
-        assertThat(result.get().getId()).isEqualTo(1L);
-        assertThat(result.get().getEmail()).isEqualTo("john@example.com");
+        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getEmail()).isEqualTo("john@example.com");
         verify(userRepository).save(any(User.class));
     }
 

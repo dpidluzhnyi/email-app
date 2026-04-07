@@ -27,7 +27,7 @@ public class SimpleEmailService {
             mailSender.send(message);
             log.info("Registration email sent to {}", event.getEmail());
         } catch (Exception e) {
-            log.info("Failed to send email to {}. Reason: {}", event.getEmail(), e.getMessage());
+            log.error("Failed to send email to {}. Reason: {}", event.getEmail(), e.getMessage());
         }
     }
 }

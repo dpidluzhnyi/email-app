@@ -12,5 +12,5 @@ public interface UserService {
     User getUserByEmail(String email) throws NoSuchUserException;
     User getUserByUserName(String username) throws NoSuchUserException;
     List<User> getAllUsers();
-    Optional<User> createUser(UserData userData) throws FailedToCreateUserException;
+    User createUser(UserData userData) throws FailedToCreateUserException;
 }

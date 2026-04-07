@@ -5,7 +5,6 @@ import com.userservice.entity.User;
 import com.userservice.exception.FailedToCreateUserException;
 import com.userservice.exception.NoSuchUserException;
 import com.userservice.service.UserService;
-import jakarta.validation.Valid;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -14,7 +13,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +48,7 @@ class UserControllerTest {
     void createUserSuccessfully() throws Exception {
         UserData data = validUserData();
         User user = new User(1L, "johndoe", "John Doe", "john@example.com", "1234567890");
-        when(userService.createUser(any(UserData.class))).thenReturn(Optional.of(user));
+        when(userService.createUser(any(UserData.class))).thenReturn(user);
 
         mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)

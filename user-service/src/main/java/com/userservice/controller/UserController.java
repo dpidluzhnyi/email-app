@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserData userData) throws FailedToCreateUserException {
-        User user = userService.createUser(userData).orElseThrow();
+        User user = userService.createUser(userData);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 

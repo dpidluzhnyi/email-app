@@ -1,2 +1,0 @@
-INSERT INTO users (email, full_name, phone, user_name) VALUES ('alice@example.com', 'Alice Black', "55555555555", "alice_black");
-INSERT INTO users (email, full_name, phone, user_name) VALUES ('bob@example.com', 'Bob Brown', "44444444444", "bobbrown");
