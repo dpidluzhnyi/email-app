@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: userEvent:com.notificationservice.dto.UserEvent
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mr.oliverwhitee@gmail.com
+    password: "zoca pzac vvid unxo"
+    properties:
+      mail:
+        smtp:
+          ssl:
+            protocols: "TLSv1.2"
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+
+
