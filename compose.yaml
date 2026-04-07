@@ -33,18 +33,30 @@ services:
     container_name: user-service
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: user-service/Dockerfile
     image: user-service:latest
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/userdb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/userdb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
     depends_on:
       - postgres
       - kafka
+
+  notification-service:
+    container_name: notification-service
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
+    image: notification-service:latest
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+      - user-service
 
 
 
